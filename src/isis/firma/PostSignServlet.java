@@ -24,11 +24,12 @@ import com.itextpdf.text.pdf.security.PdfPKCS7;
 public class PostSignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			resp.setContentType("application/octet-stream");
 			
@@ -65,10 +66,17 @@ public class PostSignServlet extends HttpServlet {
 			}
 			
 			// we write the signed document to the HttpResponse output stream
-			byte[] pdf = os.toByteArray();
+			// we write the hash that needs to be signed to the HttpResponse output
+			OutputStream sos = resp.getOutputStream();
+			sos.write("hola".getBytes(), 0, 5);
+			sos.flush();
+			sos.close();
+
+			
+			/*byte[] pdf = os.toByteArray();
 			OutputStream sos = resp.getOutputStream();
 			sos.write(pdf, 0, pdf.length);
 			sos.flush();
-			sos.close();
+			sos.close(); */
 		}
 }
