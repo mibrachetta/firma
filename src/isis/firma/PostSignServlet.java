@@ -28,8 +28,8 @@ public class PostSignServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 			resp.setContentType("application/octet-stream");
 			
 			System.out.println("ENTRE A POST-SIGN");
