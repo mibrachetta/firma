@@ -30,10 +30,6 @@ public class PostSignServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostSignServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,12 +38,11 @@ public class PostSignServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 			resp.setContentType("application/octet-stream");
-			System.out.println("VOY A INTENTAR INTRODUCIR LA FIRMA EN EL DOCUMENTO");
+			
+			System.out.println("ENTRE A POST-SIGN");
 			
 			// we get the objects we need for postsigning from the session
 			HttpSession session = req.getSession(false);

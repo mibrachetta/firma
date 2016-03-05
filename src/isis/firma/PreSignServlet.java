@@ -39,12 +39,6 @@ import com.itextpdf.text.pdf.security.PdfPKCS7;
 public class PreSignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
-    public PreSignServlet() {
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,6 +52,7 @@ public class PreSignServlet extends HttpServlet {
 			resp.setContentType("application/octet-stream");
 			
 			try {
+				System.out.println("ENTRE A PRE-SIGN");
 				// We get the self-signed certificate from the client
 				ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 				X509Certificate cert = (X509Certificate) ois.readObject();
