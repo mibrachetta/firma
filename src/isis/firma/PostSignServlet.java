@@ -20,10 +20,7 @@ import com.itextpdf.text.pdf.PdfString;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
-/**
- * Servlet implementation class PostSignServlet
- */
-@WebServlet(description = "Servlet que incrusta un firma externa en un documento PDF", urlPatterns = { "/PostSignServlet" })
+@WebServlet("/PostSignServlet")
 public class PostSignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

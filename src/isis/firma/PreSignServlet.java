@@ -32,17 +32,11 @@ import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
-/**
- * Servlet implementation class PreSignServlet
- */
 @WebServlet("/PreSignServlet")
 public class PreSignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
