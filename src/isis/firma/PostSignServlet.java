@@ -70,12 +70,17 @@ public class PostSignServlet extends HttpServlet {
 			
 			
 			
-            //File file_archivofirmado = new File (System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-            //FileOutputStream fout = new FileOutputStream(file_archivofirmado);
             
 
 			// we write the signed document to the HttpResponse output stream
 			byte[] pdf = os.toByteArray();
+
+            File file_archivofirmado = new File (System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+            FileOutputStream fout = new FileOutputStream(file_archivofirmado);
+            fout.write(pdf);
+            fout.close();
+
+			
 			OutputStream sos = resp.getOutputStream();
 			sos.write(pdf, 0, pdf.length);
 			sos.flush();
