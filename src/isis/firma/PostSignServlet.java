@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.security.cert.X509Certificate;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -47,12 +49,12 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we read the signed bytes
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ServletInputStream is = req.getInputStream();
-			int read;
-			byte[] data = new byte[256];
-			while ((read = is.read(data, 0, data.length)) != -1) {
-				baos.write(data, 0, read);
-			}
+			
+			
+			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
+			byte [] data = new byte [256];
+			ois.read(data);
+			baos.write(data);
 			
 			// we complete the PDF signing process
 			sgn.setExternalDigest(baos.toByteArray(), null, "RSA");
