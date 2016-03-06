@@ -99,6 +99,9 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("baos", baos);
 
 				// we write the hash that needs to be signed to the HttpResponse output
+				System.out.println(sh.length);
+				System.out.println(new String(sh));
+				
 				OutputStream os = resp.getOutputStream();
 				os.write(sh, 0, sh.length);
 				os.flush();
