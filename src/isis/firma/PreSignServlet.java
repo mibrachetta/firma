@@ -86,6 +86,7 @@ public class PreSignServlet extends HttpServlet {
 				PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256",null, externalDigest, false);
 				InputStream data = sap.getRangeStream();
 				byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
+				System.out.println("LONGITUD HASH" + hash.length);
 				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,null, null, CryptoStandard.CMS);
 
 				Calendar cal = Calendar.getInstance();
