@@ -6,10 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
-import java.security.cert.X509Certificate;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,16 +46,12 @@ public class PostSignServlet extends HttpServlet {
 			session.invalidate();
 			
 			// we read the signed bytes
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			
-			
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 			byte [] data = new byte [256];
 			ois.read(data);
-			baos.write(data);
 			
 			// we complete the PDF signing process
-			sgn.setExternalDigest(baos.toByteArray(), null, "RSA");
+			sgn.setExternalDigest(data, null, "RSA");
 			byte[] encodedSig = sgn.getEncodedPKCS7(hash,null,null, null, CryptoStandard.CMS);
 			byte[] paddedSig = new byte[8192];
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
@@ -69,10 +63,7 @@ public class PostSignServlet extends HttpServlet {
 			catch (DocumentException e) {
 				throw new IOException(e);
 			}
-			
-			
-			
-            
+           
 
 			// we write the signed document to the HttpResponse output stream
 			byte[] pdf = os.toByteArray();

@@ -57,11 +57,12 @@ public class PreSignServlet extends HttpServlet {
 				//we create a reader and a stamper
 				PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0');
+				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0',null,true);
+				
 				//we create the signature appearance
 				PdfSignatureAppearance sap = stamper.getSignatureAppearance();
 				sap.setReason("Prueba");
-				sap.setLocation("En servidor!");
+				sap.setLocation("En servidor");
 				sap.setVisibleSignature(new Rectangle(36, 748, 144, 780), 1, "sig");
 				sap.setCertificate(cert);
 				
