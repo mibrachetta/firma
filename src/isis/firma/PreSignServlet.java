@@ -9,6 +9,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -100,8 +101,8 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("baos", baos);
 
 				// we write the hash that needs to be signed to the HttpResponse output
-				System.out.println(sh.length);
-				System.out.println(new String(sh));
+				String base64String = Base64.getEncoder().encodeToString(sh);
+				System.out.println(base64String);
 				
 				OutputStream os = resp.getOutputStream();
 				os.write(sh, 0, sh.length);
