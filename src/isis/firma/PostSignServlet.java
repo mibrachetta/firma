@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +53,8 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
-			byte[] encodedSig = sgn.getEncodedPKCS7(hash,null,null, null, CryptoStandard.CMS);
+			Calendar cal = Calendar.getInstance();
+			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
 			byte[] paddedSig = new byte[8192];
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
 			PdfDictionary dic2 = new PdfDictionary();
