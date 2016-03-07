@@ -43,10 +43,6 @@ public class PostSignServlet extends HttpServlet {
 			HttpSession session = req.getSession(false);
 			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
 			byte[] hash = (byte[]) session.getAttribute("hash");
-			
-			String base64Hash = Base64.encodeBytes(hash);
-			System.out.println("HASH: " + base64Hash);
-			
 			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
 			ByteArrayOutputStream os = (ByteArrayOutputStream) session.getAttribute("baos");
 			session.invalidate();
@@ -55,10 +51,7 @@ public class PostSignServlet extends HttpServlet {
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 			byte [] data = new byte [128];
 			ois.read(data);
-			
-            String base64String = Base64.encodeBytes(data);
-            System.out.println("RSA: " + base64String);
-			
+		
 			
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");

@@ -101,7 +101,7 @@ public class PreSignServlet extends HttpServlet {
 
 				// we write the hash that needs to be signed to the HttpResponse output
 				OutputStream os = resp.getOutputStream();
-				os.write(sh, 0, sh.length);
+				os.write(hash, 0, hash.length);
 				os.flush();
 				os.close();
 			} 
