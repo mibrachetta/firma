@@ -87,9 +87,9 @@ public class PreSignServlet extends HttpServlet {
 				InputStream data = sap.getRangeStream();
 				byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
 				System.out.println("LONGITUD HASH" + hash.length);
-				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,null, null, CryptoStandard.CMS);
-
 				Calendar cal = Calendar.getInstance();
+				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
+
 				
 				// We store the objects we'll need for post signing in a session
 				HttpSession session = req.getSession(true);
