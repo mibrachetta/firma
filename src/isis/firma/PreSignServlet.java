@@ -9,7 +9,6 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -28,6 +27,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignature;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.codec.Base64;
 import com.itextpdf.text.pdf.security.DigestAlgorithms;
 import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
@@ -101,7 +101,7 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("baos", baos);
 
 				// we write the hash that needs to be signed to the HttpResponse output
-				String base64String = Base64.getEncoder().encodeToString(sh);
+				String base64String = Base64.encodeBytes(sh);
 				System.out.println(base64String);
 				
 				OutputStream os = resp.getOutputStream();
