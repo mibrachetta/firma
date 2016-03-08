@@ -20,7 +20,6 @@ import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfString;
-import com.itextpdf.text.pdf.codec.Base64;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
@@ -44,7 +43,7 @@ public class PostSignServlet extends HttpServlet {
 			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
 			byte[] hash = (byte[]) session.getAttribute("hash");
 			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
-			ByteArrayOutputStream os = (ByteArrayOutputStream) session.getAttribute("baos");
+			FileOutputStream fos = (FileOutputStream) session.getAttribute("fos");
 			session.invalidate();
 			
 			// we read the signed bytes
@@ -69,17 +68,16 @@ public class PostSignServlet extends HttpServlet {
 			}
     
 
+
+			
 			// we write the signed document to the HttpResponse output stream
-			byte[] pdf = os.toByteArray();
-
-            File file_archivofirmado = new File (System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-            FileOutputStream fout = new FileOutputStream(file_archivofirmado);
-            fout.write(pdf);
-            fout.close();
-
+			byte [] pdf = new byte [20];
 			OutputStream sos = resp.getOutputStream();
 			sos.write(pdf, 0, pdf.length);
 			sos.flush();
-			sos.close(); 
+			sos.close();
+			
+			fos.flush();
+			fos.close();
 		}
 }

@@ -1,6 +1,7 @@
 package isis.firma;
 
-import java.io.ByteArrayOutputStream;
+
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -56,15 +57,15 @@ public class PreSignServlet extends HttpServlet {
 								
 				//we create a reader and a stamper
 				PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0',null,true);
+				FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+				PdfStamper stamper = PdfStamper.createSignature(reader, fos, '\0');
 				
 				//we create the signature appearance
 				PdfSignatureAppearance sap = stamper.getSignatureAppearance();
 				sap.setReason("Prueba");
 				sap.setLocation("En servidor");
 				sap.setVisibleSignature(new Rectangle(36, 748, 144, 780), 1, "sig");
-				sap.setCertificate(cert);
+				sap.setCertificate(chain[0]);
 				
 				// we create the signature infrastructure
 				PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
@@ -97,11 +98,11 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("hash", hash);
 				session.setAttribute("cal", cal);
 				session.setAttribute("sap", sap);
-				session.setAttribute("baos", baos);
+				session.setAttribute("fos", fos);
 
 				// we write the hash that needs to be signed to the HttpResponse output
 				OutputStream os = resp.getOutputStream();
-				os.write(hash, 0, hash.length);
+				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
 			} 
