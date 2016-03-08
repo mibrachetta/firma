@@ -48,7 +48,7 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we read the signed bytes
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
-			byte [] data = new byte [128];
+			byte [] data = new byte [256];
 			ois.read(data);
 		
 			
@@ -67,8 +67,6 @@ public class PostSignServlet extends HttpServlet {
 				throw new IOException(e);
 			}
     
-
-
 			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
