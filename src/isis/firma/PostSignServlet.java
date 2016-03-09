@@ -1,7 +1,5 @@
 package isis.firma;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -48,6 +46,8 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we read the signed bytes
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
+			System.out.println("LONGITUD DE ENTRADA: " + ois.available());
+			
 			byte [] data = new byte [256];
 			ois.read(data);
 		
