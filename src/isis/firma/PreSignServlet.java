@@ -7,11 +7,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
-import java.security.MessageDigest;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,14 +20,15 @@ import javax.servlet.http.HttpSession;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfDate;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfSignature;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.security.BouncyCastleDigest;
 import com.itextpdf.text.pdf.security.DigestAlgorithms;
-import com.itextpdf.text.pdf.security.ExternalDigest;
+import com.itextpdf.text.pdf.security.ExternalBlankSignatureContainer;
+import com.itextpdf.text.pdf.security.ExternalSignatureContainer;
+import com.itextpdf.text.pdf.security.MakeSignature;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
@@ -49,48 +48,35 @@ public class PreSignServlet extends HttpServlet {
 			
 			try {
 				System.out.println("ENTRE A PRE-SIGN");
-				// We get the self-signed certificate from the client
+				
+				// Obtenemos el Certificado del Cliente - OJO! No hay cadena de Certificación lo trata como un autofirmado
 				ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 				X509Certificate cert = (X509Certificate) ois.readObject();
 				Certificate chain [] = new Certificate [1];
 				chain[0]=cert;
 								
-				//we create a reader and a stamper
-				PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
-				FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-				PdfStamper stamper = PdfStamper.createSignature(reader, fos, '\0');
 				
-				//we create the signature appearance
-				PdfSignatureAppearance sap = stamper.getSignatureAppearance();
-				sap.setReason("Prueba");
-				sap.setLocation("En servidor");
+				//Creamos un campo de firma vacío en el documento - Creando un nuevo documento temporal
+				
+	            PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
+	            FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_t.pdf");
+	            PdfStamper stamper = PdfStamper.createSignature(reader, fos, '\0');
+	            PdfSignatureAppearance sap = stamper.getSignatureAppearance();
 				sap.setVisibleSignature(new Rectangle(36, 748, 144, 780), 1, "sig");
-				sap.setCertificate(chain[0]);
-				
-				// we create the signature infrastructure
-				PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
-				dic.setReason(sap.getReason());
-				dic.setLocation(sap.getLocation());
-				dic.setContact(sap.getContact());
-				dic.setDate(new PdfDate(sap.getSignDate()));
-				sap.setCryptoDictionary(dic);
-				HashMap<PdfName, Integer> exc = new HashMap<PdfName, Integer>();
-				exc.put(PdfName.CONTENTS, new Integer(8192 * 2 + 2));
-				sap.preClose(exc);
-				
-				ExternalDigest externalDigest = new ExternalDigest() {
-					public MessageDigest getMessageDigest(String hashAlgorithm) throws GeneralSecurityException {
-						return DigestAlgorithms.getMessageDigest(hashAlgorithm, null);
-					}
-				};
-				
-				PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256",null, externalDigest, false);
-				InputStream data = sap.getRangeStream();
-				byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
-				System.out.println("LONGITUD HASH" + hash.length);
-				Calendar cal = Calendar.getInstance();
-				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
+	            sap.setCertificate(chain[0]);
 
+	            ExternalSignatureContainer external = new ExternalBlankSignatureContainer(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
+	            MakeSignature.signExternalContainer(sap, external, 8192);
+
+	            fos.close();
+	            reader.close();
+	            
+	            BouncyCastleDigest digest = new BouncyCastleDigest();
+	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256", null, digest, false);
+	            InputStream data = sap.getRangeStream();
+	            byte[] hash = DigestAlgorithms.digest(data, digest.getMessageDigest("SHA256"));
+	            Calendar cal = Calendar.getInstance();
+	            byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, cal, null, null, CryptoStandard.CMS);
 				
 				// We store the objects we'll need for post signing in a session
 				HttpSession session = req.getSession(true);
