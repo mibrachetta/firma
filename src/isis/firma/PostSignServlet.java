@@ -56,6 +56,7 @@ public class PostSignServlet extends HttpServlet {
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();
 			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
+			System.out.println("LONG DE ENCODESIG:" + encodedSig.length);
 			byte[] paddedSig = new byte[8192];
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
 			PdfDictionary dic2 = new PdfDictionary();
