@@ -53,7 +53,7 @@ public class PostSignServlet extends HttpServlet {
 			byte [] data = new byte [256];
 			ois.read(data);
 		
-			/*
+			
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();
@@ -70,7 +70,7 @@ public class PostSignServlet extends HttpServlet {
 			catch (DocumentException e) {
 				throw new IOException(e);
 			}
-			*/
+			
 			OutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
 			baos.writeTo(fos);
 			fos.flush();
