@@ -2,10 +2,9 @@ package isis.firma;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
-import java.security.GeneralSecurityException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,31 +15,14 @@ import javax.servlet.http.HttpSession;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfDictionary;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.security.ExternalSignatureContainer;
-import com.itextpdf.text.pdf.security.MakeSignature;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfSignatureAppearance;
+import com.itextpdf.text.pdf.PdfString;
+import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
+import com.itextpdf.text.pdf.security.PdfPKCS7;
 
 @WebServlet("/PostSignServlet")
 public class PostSignServlet extends HttpServlet {
-	
-	
-	class MyExternalSignatureContainer implements ExternalSignatureContainer {
-		
-	    protected byte[] sig;
-	    
-	    public MyExternalSignatureContainer(byte[] sig) {
-	        this.sig = sig;
-	    }
-	    
-	    public byte[] sign(InputStream is) {
-	        return sig;
-	    }
-	    
-	    public void modifySigningDictionary(PdfDictionary signDic) {
-	    }
-	}
-	
-	
 	private static final long serialVersionUID = 1L;
        
 	@Override
@@ -56,30 +38,36 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we get the objects we need for postsigning from the session
 			HttpSession session = req.getSession(false);
-            PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_t.pdf");
-            FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
- 
+			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
+			byte[] hash = (byte[]) session.getAttribute("hash");
+			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
+			FileOutputStream fos = (FileOutputStream) session.getAttribute("fos");
 			session.invalidate();
 			
 			// we read the signed bytes
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 						
-			byte [] sig = new byte [256];
-			ois.read(sig);
-	
-			ExternalSignatureContainer external = new MyExternalSignatureContainer(sig);
-		    try {
-				MakeSignature.signDeferred(reader, "sig", fos, external);
+			byte [] data = new byte [256];
+			ois.read(data);
+		
+			
+			// we complete the PDF signing process
+			sgn.setExternalDigest(data, null, "RSA");
+			Calendar cal = Calendar.getInstance();
+			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
+			System.out.println("LONG DE ENCODESIG:" + encodedSig.length);
+			byte[] paddedSig = new byte[8192];
+			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
+			PdfDictionary dic2 = new PdfDictionary();
+			dic2.put(PdfName.CONTENTS, new PdfString(paddedSig).setHexWriting(true));
+			try {
+				sap.close(dic2);
 			} 
-		    catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		    catch (GeneralSecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			catch (DocumentException e) {
+				throw new IOException(e);
 			}
-   			
+    
+			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
 			OutputStream sos = resp.getOutputStream();
@@ -89,6 +77,5 @@ public class PostSignServlet extends HttpServlet {
 			
 			fos.flush();
 			fos.close();
-			reader.close();
 		}
 }
