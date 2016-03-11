@@ -99,7 +99,7 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("hash", hash);
 				session.setAttribute("cal", cal);
 				session.setAttribute("sap", sap);
-				session.setAttribute("fos", baos);
+				session.setAttribute("baos", baos);
 
 			
 				// we write the hash that needs to be signed to the HttpResponse output
