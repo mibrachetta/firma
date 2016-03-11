@@ -66,7 +66,7 @@ public class PreSignServlet extends HttpServlet {
 	            sap.setCertificate(chain[0]);
 
 	            ExternalSignatureContainer external = new ExternalBlankSignatureContainer(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
-	            MakeSignature.signExternalContainer(sap, external, 8192);
+	            MakeSignature.signExternalContainer(sap, external, 0);
 
            
 	            BouncyCastleDigest digest = new BouncyCastleDigest();
