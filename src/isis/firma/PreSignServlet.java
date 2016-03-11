@@ -72,9 +72,9 @@ public class PreSignServlet extends HttpServlet {
 	            reader.close();
 	            
 	            BouncyCastleDigest digest = new BouncyCastleDigest();
-	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256", null, digest, false);
+	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA1", null, digest, false);
 	            InputStream data = sap.getRangeStream();
-	            byte[] hash = DigestAlgorithms.digest(data, digest.getMessageDigest("SHA256"));
+	            byte[] hash = DigestAlgorithms.digest(data, digest.getMessageDigest("SHA1"));
 	            Calendar cal = Calendar.getInstance();
 	            byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, cal, null, null, CryptoStandard.CMS);
 				
@@ -88,7 +88,7 @@ public class PreSignServlet extends HttpServlet {
 
 				// we write the hash that needs to be signed to the HttpResponse output
 				OutputStream os = resp.getOutputStream();
-				os.write(hash, 0, hash.length);
+				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
 			} 
