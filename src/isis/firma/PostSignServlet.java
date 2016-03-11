@@ -77,7 +77,6 @@ public class PostSignServlet extends HttpServlet {
 			baos.writeTo(fos);
 			fos.flush();
 			fos.close();
-		
 			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
