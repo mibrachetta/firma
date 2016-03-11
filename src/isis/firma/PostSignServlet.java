@@ -69,6 +69,11 @@ public class PostSignServlet extends HttpServlet {
 				throw new IOException(e);
 			}
 
+			OutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+			baos.writeTo(fos);
+			fos.flush();
+			fos.close();
+		
 			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
@@ -76,10 +81,5 @@ public class PostSignServlet extends HttpServlet {
 			sos.write(pdf, 0, pdf.length);
 			sos.flush();
 			sos.close();
-			
-			FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-			baos.writeTo(fos);
-			fos.flush();
-			fos.close();
 		}
 }
