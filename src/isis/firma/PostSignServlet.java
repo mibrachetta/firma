@@ -40,6 +40,7 @@ public class PostSignServlet extends HttpServlet {
 			// we get the objects we need for postsigning from the session
 			HttpSession session = req.getSession(false);
 			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
+			
 			byte[] hash = (byte[]) session.getAttribute("hash");
 			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
 			ByteArrayOutputStream baos = (ByteArrayOutputStream) session.getAttribute("baos");
@@ -55,19 +56,14 @@ public class PostSignServlet extends HttpServlet {
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();
 			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
-			System.out.println("LONG DE ENCODESIG:" + encodedSig.length);
 			byte[] paddedSig = new byte[8192];
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
-			
-			System.out.println("PASE 1");
-			
+
 			PdfDictionary dic2 = new PdfDictionary();
 			dic2.put(PdfName.CONTENTS, new PdfString(paddedSig).setHexWriting(true));
 			
-			System.out.println("PASE 2");
 			try {
 				sap.close(dic2);
-				System.out.println("PASE 3");
 			} 
 			catch (DocumentException e) {
 				throw new IOException(e);
@@ -81,17 +77,9 @@ public class PostSignServlet extends HttpServlet {
 			sos.flush();
 			sos.close();
 			
-			FileOutputStream fos=null;
-			try {
-				fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-				baos.writeTo(fos);
-			}
-			catch (IOException e){
-				e.printStackTrace();
-			}
-			finally {
-				fos.flush();
-				fos.close();
-			}
+			FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+			baos.writeTo(fos);
+			fos.flush();
+			fos.close();
 		}
 }
