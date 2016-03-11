@@ -47,12 +47,13 @@ public class PostSignServlet extends HttpServlet {
 			session.invalidate();
 			
 			// we read the signed bytes
-			/*
+			
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 						
 			byte [] data = new byte [256];
 			ois.read(data);
 		
+			/*
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();
