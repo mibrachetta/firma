@@ -51,6 +51,7 @@ public class PostSignServlet extends HttpServlet {
 			ois.read(data);
 		
 			
+			System.out.println("POR AQUI PASE");
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();

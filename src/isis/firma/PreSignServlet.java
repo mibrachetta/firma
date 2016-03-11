@@ -100,11 +100,15 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("sap", sap);
 				session.setAttribute("fos", fos);
 
+				fos.close();
+				reader.close();
+				
 				// we write the hash that needs to be signed to the HttpResponse output
 				OutputStream os = resp.getOutputStream();
 				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
+				
 			} 
 			catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
