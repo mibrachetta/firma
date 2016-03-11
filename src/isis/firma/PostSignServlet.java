@@ -50,8 +50,6 @@ public class PostSignServlet extends HttpServlet {
 			byte [] data = new byte [256];
 			ois.read(data);
 		
-			
-			System.out.println("POR AQUI PASE");
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
 			Calendar cal = Calendar.getInstance();
@@ -67,7 +65,8 @@ public class PostSignServlet extends HttpServlet {
 			catch (DocumentException e) {
 				throw new IOException(e);
 			}
-    
+
+			System.out.println("HASTA AQUI LLEGUE");
 			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
