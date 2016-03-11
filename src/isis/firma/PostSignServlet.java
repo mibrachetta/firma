@@ -1,5 +1,6 @@
 package isis.firma;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -41,7 +42,7 @@ public class PostSignServlet extends HttpServlet {
 			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
 			byte[] hash = (byte[]) session.getAttribute("hash");
 			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
-			FileOutputStream fos = (FileOutputStream) session.getAttribute("fos");
+			ByteArrayOutputStream baos = (ByteArrayOutputStream) session.getAttribute("baos");
 			session.invalidate();
 			
 			// we read the signed bytes
@@ -80,7 +81,17 @@ public class PostSignServlet extends HttpServlet {
 			sos.flush();
 			sos.close();
 			
-			fos.flush();
-			fos.close();
+			FileOutputStream fos=null;
+			try {
+				fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+				baos.writeTo(fos);
+			}
+			catch (IOException e){
+				e.printStackTrace();
+			}
+			finally {
+				fos.flush();
+				fos.close();
+			}
 		}
 }

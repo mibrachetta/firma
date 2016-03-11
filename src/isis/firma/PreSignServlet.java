@@ -1,7 +1,7 @@
 package isis.firma;
 
 
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -57,8 +57,9 @@ public class PreSignServlet extends HttpServlet {
 								
 				//we create a reader and a stamper
 				PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
-				FileOutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
-				PdfStamper stamper = PdfStamper.createSignature(reader, fos, '\0');
+				
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0');
 				
 				//we create the signature appearance
 				PdfSignatureAppearance sap = stamper.getSignatureAppearance();
@@ -98,7 +99,7 @@ public class PreSignServlet extends HttpServlet {
 				session.setAttribute("hash", hash);
 				session.setAttribute("cal", cal);
 				session.setAttribute("sap", sap);
-				session.setAttribute("fos", fos);
+				session.setAttribute("fos", baos);
 
 			
 				// we write the hash that needs to be signed to the HttpResponse output
@@ -106,7 +107,6 @@ public class PreSignServlet extends HttpServlet {
 				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
-				
 			} 
 			catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
