@@ -47,6 +47,7 @@ public class PostSignServlet extends HttpServlet {
 			session.invalidate();
 			
 			// we read the signed bytes
+			/*
 			ObjectInputStream ois = new ObjectInputStream(req.getInputStream());
 						
 			byte [] data = new byte [256];
@@ -68,7 +69,7 @@ public class PostSignServlet extends HttpServlet {
 			catch (DocumentException e) {
 				throw new IOException(e);
 			}
-
+			*/
 			OutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
 			baos.writeTo(fos);
 			fos.flush();
