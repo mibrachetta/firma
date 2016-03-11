@@ -57,16 +57,21 @@ public class PostSignServlet extends HttpServlet {
 			System.out.println("LONG DE ENCODESIG:" + encodedSig.length);
 			byte[] paddedSig = new byte[8192];
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
+			
+			System.out.println("PASE 1");
+			
 			PdfDictionary dic2 = new PdfDictionary();
 			dic2.put(PdfName.CONTENTS, new PdfString(paddedSig).setHexWriting(true));
+			
+			System.out.println("PASE 2");
 			try {
 				sap.close(dic2);
+				System.out.println("PASE 3");
 			} 
 			catch (DocumentException e) {
 				throw new IOException(e);
 			}
 
-			System.out.println("HASTA AQUI LLEGUE");
 			
 			// we write the signed document to the HttpResponse output stream
 			byte [] pdf = new byte [20];
