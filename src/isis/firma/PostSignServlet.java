@@ -64,6 +64,8 @@ public class PostSignServlet extends HttpServlet {
 			PdfDictionary dic2 = new PdfDictionary();
 			dic2.put(PdfName.CONTENTS, new PdfString(paddedSig).setHexWriting(true));
 			
+			System.out.println("LONGITUD DE CONTENS: " + new PdfString(paddedSig).setHexWriting(true).length());
+			
 			try {
 				sap.close(dic2);
 			} 
