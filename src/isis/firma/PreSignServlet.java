@@ -68,15 +68,13 @@ public class PreSignServlet extends HttpServlet {
 	            ExternalSignatureContainer external = new ExternalBlankSignatureContainer(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
 	            MakeSignature.signExternalContainer(sap, external, 8192);
 
-	            fos.close();
-	            reader.close();
-	            
+           
 	            BouncyCastleDigest digest = new BouncyCastleDigest();
-	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA1", null, digest, false);
+	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256", null, digest, false);
 	            InputStream data = sap.getRangeStream();
-	            byte[] hash = DigestAlgorithms.digest(data, digest.getMessageDigest("SHA1"));
+	            byte[] hash = DigestAlgorithms.digest(data, digest.getMessageDigest("SHA256"));
 	            Calendar cal = Calendar.getInstance();
-	            byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, cal, null, null, CryptoStandard.CMS);
+	            byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, null, null, CryptoStandard.CMS);
 				
 				// We store the objects we'll need for post signing in a session
 				HttpSession session = req.getSession(true);
@@ -91,6 +89,9 @@ public class PreSignServlet extends HttpServlet {
 				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
+				
+	            fos.close();
+	            reader.close();
 			} 
 			catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
