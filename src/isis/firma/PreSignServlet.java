@@ -90,7 +90,7 @@ public class PreSignServlet extends HttpServlet {
 				InputStream data = sap.getRangeStream();
 				byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
 				Calendar cal = Calendar.getInstance();
-				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
+				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,null,null, null, CryptoStandard.CMS);
 				System.out.println("Y ESTO ES:");
 				System.out.println(new String(Base64.encodeBytes(sh)));
 
