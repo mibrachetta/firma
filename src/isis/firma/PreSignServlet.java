@@ -28,6 +28,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignature;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.codec.Base64;
 import com.itextpdf.text.pdf.security.DigestAlgorithms;
 import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
@@ -91,6 +92,8 @@ public class PreSignServlet extends HttpServlet {
 				System.out.println("LONGITUD HASH" + hash.length);
 				Calendar cal = Calendar.getInstance();
 				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
+				
+				System.out.println(new String(Base64.encodeBytes(sh)));
 
 				
 				// We store the objects we'll need for post signing in a session

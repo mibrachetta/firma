@@ -59,7 +59,6 @@ public class PostSignServlet extends HttpServlet {
 			Calendar cal = Calendar.getInstance();
 			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
 			byte[] paddedSig = new byte[8192];
-			System.out.println(new PdfString(paddedSig).setHexWriting(true));
 			
 			System.arraycopy(encodedSig, 0, paddedSig, 0, encodedSig.length);
 
