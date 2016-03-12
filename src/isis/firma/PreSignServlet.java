@@ -2,6 +2,8 @@ package isis.firma;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -57,9 +59,13 @@ public class PreSignServlet extends HttpServlet {
 				chain[0]=cert;
 								
 				//we create a reader and a stamper
-				PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
-				
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				File archivo_original = new File(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
+	            byte [] bytearchivo = new byte[(int) archivo_original.length()];
+	            FileInputStream fis = new FileInputStream(archivo_original);
+	            fis.read(bytearchivo);
+	            PdfReader reader = new PdfReader(bytearchivo);
+
+	            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0');
 				
 				//we create the signature appearance
