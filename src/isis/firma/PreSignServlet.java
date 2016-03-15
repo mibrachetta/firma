@@ -1,6 +1,5 @@
 package isis.firma;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +29,6 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignature;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.codec.Base64;
 import com.itextpdf.text.pdf.security.DigestAlgorithms;
 import com.itextpdf.text.pdf.security.ExternalDigest;
 import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
@@ -59,12 +57,12 @@ public class PreSignServlet extends HttpServlet {
 				chain[0]=cert;
 								
 				//we create a reader and a stamper
-				File archivo_original = new File(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002.pdf");
+				File archivo_original = new File(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
 	            byte [] bytearchivo = new byte[(int) archivo_original.length()];
 	            FileInputStream fis = new FileInputStream(archivo_original);
 	            fis.read(bytearchivo);
 	            PdfReader reader = new PdfReader(bytearchivo);
-
+            
 	            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0');
 				
@@ -86,22 +84,17 @@ public class PreSignServlet extends HttpServlet {
 				exc.put(PdfName.CONTENTS, new Integer(8192 * 2 + 2));
 				sap.preClose(exc);
 				
-				ExternalDigest externalDigest = new ExternalDigest() {
-					public MessageDigest getMessageDigest(String hashAlgorithm) throws GeneralSecurityException {
-						return DigestAlgorithms.getMessageDigest(hashAlgorithm, null);
-					}
-				};
-				
-				PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256",null, externalDigest, false);
-				InputStream data = sap.getRangeStream();
-				byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
-				System.out.println("HASH");
-				System.out.println(new String(Base64.encodeBytes(hash)));
-				
-				Calendar cal = Calendar.getInstance();
-				byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
-				System.out.println("Y ESTO ES:");
-				System.out.println(new String(Base64.encodeBytes(sh)));
+	            ExternalDigest externalDigest = new ExternalDigest() {
+	                public MessageDigest getMessageDigest(String hashAlgorithm) throws GeneralSecurityException {
+	                        return DigestAlgorithms.getMessageDigest(hashAlgorithm, null);
+	                }
+	            };
+	        
+	            PdfPKCS7 sgn = new PdfPKCS7(null, chain, "SHA256",null, externalDigest, false);
+	            InputStream data = sap.getRangeStream();
+	            byte hash[] = DigestAlgorithms.digest(data,externalDigest.getMessageDigest("SHA256"));
+	            Calendar cal = Calendar.getInstance();
+	            byte[] sh = sgn.getAuthenticatedAttributeBytes(hash,cal,null, null, CryptoStandard.CMS);
 
 				
 				// We store the objects we'll need for post signing in a session
@@ -118,6 +111,7 @@ public class PreSignServlet extends HttpServlet {
 				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
+				fis.close();
 			} 
 			catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

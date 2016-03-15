@@ -65,8 +65,6 @@ public class PostSignServlet extends HttpServlet {
 			PdfDictionary dic2 = new PdfDictionary();
 			dic2.put(PdfName.CONTENTS, new PdfString(paddedSig).setHexWriting(true));
 			
-			System.out.println("LONGITUD DE CONTENS: " + new PdfString(paddedSig).setHexWriting(true).length());
-			
 			try {
 				sap.close(dic2);
 			} 
@@ -74,7 +72,7 @@ public class PostSignServlet extends HttpServlet {
 				throw new IOException(e);
 			}
 			
-			OutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0002_f.pdf");
+			OutputStream fos = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001_f.pdf");
 			baos.writeTo(fos);
 			fos.flush();
 			fos.close();
