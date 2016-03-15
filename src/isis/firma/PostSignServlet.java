@@ -33,15 +33,16 @@ public class PostSignServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			resp.setContentType("application/octet-stream");
+
+		resp.setContentType("application/octet-stream");
 			
 			System.out.println("ENTRE A POST-SIGN");
 			
 			// we get the objects we need for postsigning from the session
 			HttpSession session = req.getSession(false);
 			PdfPKCS7 sgn = (PdfPKCS7) session.getAttribute("sgn");
-			
 			byte[] hash = (byte[]) session.getAttribute("hash");
+			Calendar cal = (Calendar) session.getAttribute("cal");
 			PdfSignatureAppearance sap = (PdfSignatureAppearance) session.getAttribute("sap");
 			ByteArrayOutputStream baos = (ByteArrayOutputStream) session.getAttribute("baos");
 			session.invalidate();
@@ -56,7 +57,6 @@ public class PostSignServlet extends HttpServlet {
 			
 			// we complete the PDF signing process
 			sgn.setExternalDigest(data, null, "RSA");
-			Calendar cal = Calendar.getInstance();
 			byte[] encodedSig = sgn.getEncodedPKCS7(hash,cal,null,null, null, CryptoStandard.CMS);
 			byte[] paddedSig = new byte[8192];
 			

@@ -57,14 +57,10 @@ public class PreSignServlet extends HttpServlet {
 				chain[0]=cert;
 								
 				//we create a reader and a stamper
-				File archivo_original = new File(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
-	            byte [] bytearchivo = new byte[(int) archivo_original.length()];
-	            FileInputStream fis = new FileInputStream(archivo_original);
-	            fis.read(bytearchivo);
-	            PdfReader reader = new PdfReader(bytearchivo);
+	            PdfReader reader = new PdfReader(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
             
 	            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				PdfStamper stamper = PdfStamper.createSignature(reader, baos, '\0');
+				PdfStamper stamper = PdfStamper.createSignature(reader, baos,'\0');
 				
 				//we create the signature appearance
 				PdfSignatureAppearance sap = stamper.getSignatureAppearance();
@@ -111,7 +107,6 @@ public class PreSignServlet extends HttpServlet {
 				os.write(sh, 0, sh.length);
 				os.flush();
 				os.close();
-				fis.close();
 			} 
 			catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
