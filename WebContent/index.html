@@ -3,10 +3,9 @@
 <head>
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
-    	"use strict";
+	   	"use strict";
 
-
-    	alert ("ENTRE");
+	   	alert ("ENTRE");
         	
 	    if (!window.crypto || !window.crypto.subtle) {
     	    alert("Su browser no soporta Web Cryptography API! Esta página no trabajará adecuadamente.");
@@ -14,12 +13,13 @@
     	}
 	    else {
 	    	window.crypto.subtle.KeyStore.enumerateKeys(window.crypto.subtle.KeyStore.PLATFORM).then (function (foundKeys) {
-	    	 // Successful call, any keys?
-	    	 if (foundKeys.length == 0) {
-	    	    alert("no encontre claves");
-	    	 }
-	    	 // Select a key to use, here just the first one
-	    	 var key = foundKeys[0];
+	    	 	// Successful call, any keys?
+		    	 if (foundKeys.length == 0) {
+		    	    alert("no encontre claves");
+	    		 }
+	    		 // Select a key to use, here just the first one
+		    	 var key = foundKeys[0];
+	    	}
 		}
 	});
 </script>
