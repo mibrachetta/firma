@@ -9,9 +9,18 @@
     	alert ("ENTRE");
         	
 	    if (!window.crypto || !window.crypto.subtle) {
-    	    alert("Your current browser does not support the Web Cryptography API! This page will not work.");
+    	    alert("Su browser no soporta Web Cryptography API! Esta página no trabajará adecuadamente.");
         	return;
     	}
+	    else {
+	    	window.crypto.subtle.KeyStore.enumerateKeys(window.crypto.subtle.KeyStore.PLATFORM).then (function (foundKeys) {
+	    	 // Successful call, any keys?
+	    	 if (foundKeys.length == 0) {
+	    	    alert("no encontre claves");
+	    	 }
+	    	 // Select a key to use, here just the first one
+	    	 var key = foundKeys[0];
+		}
 	});
 </script>
 
