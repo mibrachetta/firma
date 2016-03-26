@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="hwcrypto-legacy.js"></script>
+<script src="hwcrypto.js"></script>
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
 	   	"use strict";
-
 	   	alert ("ENTRE");
-        	
-	    if (!window.crypto || !window.crypto.subtle) {
-    	    alert("Su browser no soporta Web Cryptography API! Esta página no trabajará adecuadamente.");
-        	return;
-    	}
-	    else {
-	    	window.crypto.subtle.KeyStore.enumerateKeys(window.crypto.subtle.KeyStore.PLATFORM).then (function (foundKeys) {
-	    	 	// Successful call, any keys?
-		    	 if (foundKeys.length == 0) {
-		    	    alert("no encontre claves");
-	    		 }
-	    		 // Select a key to use, here just the first one
-		    	 var key = foundKeys[0];
-	    	});
-		}
+
+	 	// NB! This sample uses the legacy `hex` property!
+	   	window.hwcrypto.getCertificate({lang: 'en'}).then(function(certificate) {
+	   	   // Do something with the certificate, like prepare the hash to be signed
+	   	   var hash = calculateSHA256SignatureHashAsHexForCertificate(certificate.hex);
+	   	   // Now sign the hash
+	   	   window.hwcrypto.sign(certificate, {type: 'SHA-256', hex: hash}, {lang: 'en'}).then(function(signature) {
+	   	      // Do something with the signature
+	   	      storeSignature(signature.hex);
+	   	   }, function(error) {
+	   	      // Handle the error. `error.message` is one of the described error mnemonics
+	   	      console.log("Signing failed: " + error.message);
+	   	   });
+	   	});
 	});
 </script>
 
