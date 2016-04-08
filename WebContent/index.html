@@ -7,6 +7,7 @@
 	document.addEventListener("DOMContentLoaded", function() {
 	   	"use strict";
 	   	alert ("ENTRE");
+	   	chrome.platformKeys.selectClientCertificates({request: {certificateTypes:["rsaSign"],certificateAuthorities:[]}, interactive:true}, function(matches){console.log(matches)});
 	});
 </script>
 
