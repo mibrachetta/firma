@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+/**
+ * Upload a file
+ * @param file
+ */
+function uploadFile(file){
+    var url = "/UploadFileServlet";
+    var xhr = new XMLHttpRequest();
+    var fd = new FormData();
+    xhr.open("POST", url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Every thing ok, file uploaded
+            console.log(xhr.responseText); // handle response.
+        }
+    };
+    fd.append('uploaded_file', file);
+    xhr.send(fd);
+}
+</script>
 
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-HOLA MUNDO
+HOLA MUNDO 
+<label><strong>Upload File : </strong><input type="file" id="uploadfiles" multiple="multiple" /></label><br/>
 </body>
 </html>
