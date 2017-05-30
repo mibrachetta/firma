@@ -27,7 +27,6 @@ public class UploadFileServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 PrintWriter out = resp.getWriter();
          for (Part part : req.getParts()) { 
               InputStream is = req.getPart(part.getName()).getInputStream();  
               String fileName = getFileName(part);  
@@ -40,9 +39,7 @@ public class UploadFileServlet extends HttpServlet {
               os.flush();  
               is.close();  
               os.close();  
-              out.println(fileName + " fue subido a "  
-                        + System.getenv("OPENSHIFT_DATA_DIR"));
-              resp.sendRedirect("/visor.html");
+              resp.sendRedirect("visor.html");
          }  
 
 	}
