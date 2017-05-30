@@ -39,6 +39,7 @@ public class UploadFileServlet extends HttpServlet {
               os.flush();  
               is.close();  
               os.close();  
+              resp.setContentType("txt/html;Charset=UTF-8");
               resp.sendRedirect("visor.html");
          }  
 
