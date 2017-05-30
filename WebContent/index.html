@@ -20,6 +20,14 @@ function uploadFile(file){
     fd.append('uploaded_file', file);
     xhr.send(fd);
 }
+
+var uploadfiles = document.querySelector('#uploadfiles');
+uploadfiles.addEventListener('change', function () {
+    var files = this.files;
+    for(var i=0; i<files.length; i++){
+        uploadFile(this.files[i]); // call the function to upload the file
+    }
+}, false);
 </script>
 
 <meta charset="ISO-8859-1">
