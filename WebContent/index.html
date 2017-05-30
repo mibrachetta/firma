@@ -1,42 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<script>
-/**
- * Upload a file
- * @param file
- */
-function uploadFile(file){
-	alert("entre 2");
-    var url = "/UploadFileServlet";
-    var xhr = new XMLHttpRequest();
-    var fd = new FormData();
-    xhr.open("POST", url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // Every thing ok, file uploaded
-            console.log(xhr.responseText); // handle response.
-        }
-    };
-    fd.append('uploaded_file', file);
-    xhr.send(fd);
-}
-
-var uploadfiles = document.querySelector('#uploadfiles');
-uploadfiles.addEventListener('change', function () {
-    var files = this.files;
-    alert("entre 1");
-    for(var i=0; i<files.length; i++){
-        uploadFile(this.files[i]); // call the function to upload the file
-    }
-}, false);
-</script>
-
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
 <body>
-HOLA MUNDO 
+
 <label><strong>Upload File : </strong><input type="file" id="uploadfiles" multiple="multiple" /></label><br/>
+<!-- Scripts -->
+<script src="upload.js"></script>
 </body>
 </html>
