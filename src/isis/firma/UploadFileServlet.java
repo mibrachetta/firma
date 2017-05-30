@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;  
 import java.io.InputStream;  
 import java.io.PrintWriter;  
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;  
 import javax.servlet.annotation.MultipartConfig;  
 import javax.servlet.annotation.WebServlet;  
@@ -40,7 +42,9 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         resp.sendRedirect("http://firma-isisconsultores.rhcloud.com/visor.html");
+         
+         RequestDispatcher rd = req.getRequestDispatcher("visor.html");
+         rd.forward(req, resp);
 	}
 	
 	
