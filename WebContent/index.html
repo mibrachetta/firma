@@ -7,6 +7,7 @@
  * @param file
  */
 function uploadFile(file){
+	alert("entre 2");
     var url = "/UploadFileServlet";
     var xhr = new XMLHttpRequest();
     var fd = new FormData();
@@ -24,6 +25,7 @@ function uploadFile(file){
 var uploadfiles = document.querySelector('#uploadfiles');
 uploadfiles.addEventListener('change', function () {
     var files = this.files;
+    alert("entre 1");
     for(var i=0; i<files.length; i++){
         uploadFile(this.files[i]); // call the function to upload the file
     }
