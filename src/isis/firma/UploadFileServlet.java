@@ -41,7 +41,8 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
               out.println(fileName + " fue subido a "  
-                        + System.getenv("OPENSHIFT_DATA_DIR"));  
+                        + System.getenv("OPENSHIFT_DATA_DIR"));
+              resp.sendRedirect("visor.html");
          }  
 
 	}
