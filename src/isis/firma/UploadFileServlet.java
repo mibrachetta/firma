@@ -42,9 +42,7 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         
-         RequestDispatcher rd = req.getRequestDispatcher("visor.html");
-         rd.forward(req, resp);
+         resp.sendRedirect("http://firma-isisconsultores.rhcloud.com/visor.html");
 	}
 	
 	
