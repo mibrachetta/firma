@@ -42,7 +42,7 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         resp.sendRedirect("http://firma-isisconsultores.rhcloud.com/VolantePagoF5859.pdf");
+         resp.sendRedirect("http://firma-isisconsultores.rhcloud.com/visor.html");
 	}
 	
 	
