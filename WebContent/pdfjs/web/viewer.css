@@ -1243,6 +1243,10 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   content: url(images/secondaryToolbarButton-documentProperties.png);
 }
 
+.secondaryToolbarButton.firmarDigitalmente::before {
+  content: url(images/secondaryToolbarButton-documentProperties.png);
+}
+
 .verticalToolbarSeparator {
   display: block;
   padding: 8px 0;
