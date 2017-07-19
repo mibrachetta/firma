@@ -2855,12 +2855,12 @@ var pdfjsWebLibs;
        element: options.documentPropertiesButton,
        eventName: 'documentproperties',
        close: true
-      }
+      },
       {
           element: options.firmarDigitalmenteButton,
           eventName: 'firmardigitalmente',
           close: true
-         }
+       }
      ];
      this.items = {
       firstPage: options.firstPageButton,
