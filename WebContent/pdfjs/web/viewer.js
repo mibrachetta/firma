@@ -7421,7 +7421,7 @@ function getViewerConfiguration() {
    pageRotateCwButton: document.getElementById('pageRotateCw'),
    pageRotateCcwButton: document.getElementById('pageRotateCcw'),
    toggleHandToolButton: document.getElementById('toggleHandTool'),
-   documentPropertiesButton: document.getElementById('documentProperties')
+   documentPropertiesButton: document.getElementById('documentProperties'),
    firmarDigitalmenteButton: document.getElementById('firmarDigitalmente')
   },
   fullscreen: {
