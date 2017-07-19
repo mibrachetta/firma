@@ -6805,7 +6805,8 @@ var pdfjsWebLibs;
     PDFViewerApplication.pdfDocumentProperties.open();
    }
    function webViewerFirmarDigitalmente(){
-	   alert("Y AQUI FIRMO");
+	   var applet = document.getElementById('idApplet'); //Objeto del applet embebido en la pagina
+       applet.cambia();
    }
    function webViewerFind(e) {
     PDFViewerApplication.findController.executeCommand('find' + e.type, {
