@@ -2856,6 +2856,11 @@ var pdfjsWebLibs;
        eventName: 'documentproperties',
        close: true
       }
+      {
+          element: options.firmarDigitalmenteButton,
+          eventName: 'firmardigitalmente',
+          close: true
+         }
      ];
      this.items = {
       firstPage: options.firstPageButton,
@@ -6411,6 +6416,7 @@ var pdfjsWebLibs;
      eventBus.on('rotatecw', webViewerRotateCw);
      eventBus.on('rotateccw', webViewerRotateCcw);
      eventBus.on('documentproperties', webViewerDocumentProperties);
+     eventBus.on('firmardigitalmente', webViewerFirmarDigitalmente);
      eventBus.on('find', webViewerFind);
      eventBus.on('findfromurlhash', webViewerFindFromUrlHash);
      eventBus.on('fileinputchange', webViewerFileInputChange);
@@ -6797,6 +6803,9 @@ var pdfjsWebLibs;
    }
    function webViewerDocumentProperties() {
     PDFViewerApplication.pdfDocumentProperties.open();
+   }
+   function webViewerFirmarDigitalmente(){
+	   alert("Y AQUI FIRMO");
    }
    function webViewerFind(e) {
     PDFViewerApplication.findController.executeCommand('find' + e.type, {
@@ -7413,6 +7422,7 @@ function getViewerConfiguration() {
    pageRotateCcwButton: document.getElementById('pageRotateCcw'),
    toggleHandToolButton: document.getElementById('toggleHandTool'),
    documentPropertiesButton: document.getElementById('documentProperties')
+   firmarDigitalmenteButton: document.getElementById('firmarDigitalmente')
   },
   fullscreen: {
    contextFirstPage: document.getElementById('contextFirstPage'),

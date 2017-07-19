@@ -1244,7 +1244,7 @@ html[dir="rtl"] .secondaryToolbarButton > span {
 }
 
 .secondaryToolbarButton.firmarDigitalmente::before {
-  content: url(images/secondaryToolbarButton-documentProperties.png);
+  content: url(images/secondaryToolbarButton-firmarDigitalmente.png);
 }
 
 .verticalToolbarSeparator {
