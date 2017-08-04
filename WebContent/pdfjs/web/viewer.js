@@ -6805,10 +6805,8 @@ var pdfjsWebLibs;
     PDFViewerApplication.pdfDocumentProperties.open();
    }
    function webViewerFirmarDigitalmente(){
-	   document.appletFirma.thisIsAMethodCall(argument);
+	   document.appletFirma.thisIsAMethodCall("MARIANA LO HIZO");
 	   alert("AQUI Estoy");
-	   /*var applet = document.getElementById('idApplet'); //Objeto del applet embebido en la pagina
-       applet.cambia(); */
    }
    function webViewerFind(e) {
     PDFViewerApplication.findController.executeCommand('find' + e.type, {
