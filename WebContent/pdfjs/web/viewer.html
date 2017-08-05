@@ -251,10 +251,13 @@ See https://github.com/adobe-type-tools/cmap-resources
         <div id="viewerContainer" tabindex="0">
           <div id="viewer" class="pdfViewer"></div>
         </div>
-        <div id="appletFirma">
-        	<object codetype="application/java" classid="java:appletFirma.class" archive="appletFirma.jar" name="appletFirma" width="1" height="1"></object>
+		<div id="appletF">
+	      	<object type="application/x-java-applet" height="1" width="1">
+			  <param name="code" value="isis.firma.appletFirma" />
+			  <param name="archive" value="appletFirma.jar" />
+			  El applet de Firma no puede ejecutarse.  No se encontró un plugin de Java.
+			</object>
         </div>
-
         <div id="errorWrapper" hidden='true'>
           <div id="errorMessageLeft">
             <span id="errorMessage"></span>

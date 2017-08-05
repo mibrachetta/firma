@@ -6805,7 +6805,7 @@ var pdfjsWebLibs;
     PDFViewerApplication.pdfDocumentProperties.open();
    }
    function webViewerFirmarDigitalmente(){
-	   alert(document.appletFirma.thisIsAMethodCall("MARIANA LO HIZO"));
+	   document.appletFirma.thisIsAMethodCall("MARIANA LO HIZO");
 	   alert("AQUI Estoy");
    }
    function webViewerFind(e) {
