@@ -29,10 +29,11 @@ public class UploadFileServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          for (Part part : request.getParts()) { 
-              InputStream is = request.getPart(part.getName()).getInputStream();  
+              InputStream is = request.getPart(part.getName()).getInputStream();
               String fileName = getFileName(part);  
               //FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + fileName);  
-              FileOutputStream os = new FileOutputStream(fileName);
+              FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_REPO_DIR") + fileName);
+
               byte[] bytes = new byte[BUFFER_LENGTH];  
               int read = 0;  
               while ((read = is.read(bytes, 0, BUFFER_LENGTH)) != -1) {  
@@ -42,6 +43,7 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
+       
          System.out.println(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
 	}
 	
