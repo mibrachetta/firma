@@ -42,7 +42,9 @@ public class UploadFileServlet extends HttpServlet {
               os.close();  
          }
          System.out.println("PASE POR AQUI");
-         response.sendRedirect(response.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         //response.sendRedirect(response.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         response.setStatus(307); //this makes the redirection keep your requesting method as is.
+         response.addHeader("Location", "http://www.i-sis.com.ar");
          System.out.println("Y POR AQUI TAMBIÉN");
 	}
 	
