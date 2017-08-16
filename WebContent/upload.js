@@ -25,10 +25,11 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // Every thing ok, file uploaded
+            	alert("Todo ok");
                 console.log(xhr.responseText); // handle response.
-                console.log("pase por aquí eh");
             }
             else {
+            	alert("pase por aquí");
             	console.log("Algo no anda bien");
             }
         };
