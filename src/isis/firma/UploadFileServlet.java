@@ -41,7 +41,7 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         //response.sendRedirect(response.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         System.out.println(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
 	}
 	
 	

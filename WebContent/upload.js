@@ -27,7 +27,7 @@
                 // Every thing ok, file uploaded
             	alert("Todo ok");
                 console.log(xhr.responseText); // handle response.
-                window.location.href = "http://www.i-sis.com.ar";
+                window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=";
             }
         };
         fd.append('uploaded_file', file);
