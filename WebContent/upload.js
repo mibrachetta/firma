@@ -26,6 +26,10 @@
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // Every thing ok, file uploaded
                 console.log(xhr.responseText); // handle response.
+                console.log("pase por aquí eh");
+            }
+            else {
+            	console.log("Algo no anda bien");
             }
         };
         fd.append('uploaded_file', file);
