@@ -41,17 +41,7 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         
-         PrintWriter out;
-         out = response.getWriter();
-         response.setContentType("text/html");
-         out.println("<html>");
-         out.println("<head><title>Enviar parametros a un Servlet</title></head>");
-         out.println("<body>");
-         out.println("<h1>Enviar parametros a un Servlet</h1>");
-         out.println("La primera palabra pasada como parámetro es <strong>" +"Mariana" + "</strong><br>");
-         out.println("La segunda palabra pasada como parámetro es <strong>" + "Bracheta" + "</strong>");
-         out.println("</body></html>");
+         System.out.println("PASE POR AQUI");
          //resp.sendRedirect(resp.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
 	}
 	
