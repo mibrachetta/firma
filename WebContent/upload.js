@@ -27,10 +27,7 @@
                 // Every thing ok, file uploaded
             	alert("Todo ok");
                 console.log(xhr.responseText); // handle response.
-            }
-            else {
-            	alert("pase por aquí");
-            	console.log("Algo no anda bien");
+                window.location.href = "http://www.i-sis.com.ar";
             }
         };
         fd.append('uploaded_file', file);
