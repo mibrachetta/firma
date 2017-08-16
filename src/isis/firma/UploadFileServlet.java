@@ -42,7 +42,8 @@ public class UploadFileServlet extends HttpServlet {
               os.close();  
          }
          System.out.println("PASE POR AQUI");
-         //resp.sendRedirect(resp.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         response.sendRedirect(response.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         System.out.println("Y POR AQUI TAMBIÉN");
 	}
 	
 	
