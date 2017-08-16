@@ -3,9 +3,8 @@ package isis.firma;
 import java.io.FileOutputStream;  
 import java.io.IOException;  
 import java.io.InputStream;  
-import java.io.PrintWriter;  
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;  
 import javax.servlet.annotation.MultipartConfig;  
 import javax.servlet.annotation.WebServlet;  
@@ -24,13 +23,13 @@ public class UploadFileServlet extends HttpServlet {
        
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doPost(request,response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         for (Part part : req.getParts()) { 
-              InputStream is = req.getPart(part.getName()).getInputStream();  
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         for (Part part : request.getParts()) { 
+              InputStream is = request.getPart(part.getName()).getInputStream();  
               String fileName = getFileName(part);  
               FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + fileName);  
               byte[] bytes = new byte[BUFFER_LENGTH];  
@@ -42,7 +41,18 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-         resp.sendRedirect(resp.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
+         
+         PrintWriter out;
+         out = response.getWriter();
+         response.setContentType("text/html");
+         out.println("<html>");
+         out.println("<head><title>Enviar parametros a un Servlet</title></head>");
+         out.println("<body>");
+         out.println("<h1>Enviar parametros a un Servlet</h1>");
+         out.println("La primera palabra pasada como parámetro es <strong>" +"Mariana" + "</strong><br>");
+         out.println("La segunda palabra pasada como parámetro es <strong>" + "Bracheta" + "</strong>");
+         out.println("</body></html>");
+         //resp.sendRedirect(resp.encodeRedirectURL("http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=algo.htm"));
 	}
 	
 	
