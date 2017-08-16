@@ -25,7 +25,7 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // Every thing ok, file uploaded
-            	alert("Todo ok");
+            	alert("tODO OK" + xhr.responseText);
                 console.log(xhr.responseText); // handle response.
                 window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=";
             }

@@ -31,8 +31,7 @@ public class UploadFileServlet extends HttpServlet {
          for (Part part : request.getParts()) { 
               InputStream is = request.getPart(part.getName()).getInputStream();
               String fileName = getFileName(part);  
-              //FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + fileName);  
-              FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_REPO_DIR") + fileName);
+              FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") + fileName);  
 
               byte[] bytes = new byte[BUFFER_LENGTH];  
               int read = 0;  
@@ -43,7 +42,8 @@ public class UploadFileServlet extends HttpServlet {
               is.close();  
               os.close();  
          }
-       
+         
+         response.getWriter().write("HOLA MARIANA");
          System.out.println(System.getenv("OPENSHIFT_DATA_DIR")+"/D0001.pdf");
 	}
 	
