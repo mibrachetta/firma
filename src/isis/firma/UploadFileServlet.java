@@ -44,7 +44,7 @@ public class UploadFileServlet extends HttpServlet {
          }
          
          response.getWriter().write("HOLA MARIANA");
-         System.out.println(System.getenv("OPENSHIFT_REPO_DIR")+"/D0001.pdf");
+         System.out.println(System.getenv("OPENSHIFT_REPO_DIR")+"D0001.pdf");
 	}
 	
 	
