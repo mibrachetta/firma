@@ -1,4 +1,4 @@
 if [ ! -d ${OPENSHIFT_DATA_DIR}documentos ]; then
     mkdir ${OPENSHIFT_DATA_DIR}documentos
 fi
-ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}WebContent
+ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}src/isis/firma/
