@@ -1,1 +1,4 @@
-ln -sf ${OPENSHIFT_DATA_DIR} /var/lib/openshift/<app-id>/jbossews/webapps
+if [ ! -d ${OPENSHIFT_DATA_DIR}documentos ]; then
+    mkdir ${OPENSHIFT_DATA_DIR}documentos
+fi
+ln -s ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}WebContent
