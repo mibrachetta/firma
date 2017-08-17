@@ -27,7 +27,7 @@
                 // Every thing ok, file uploaded
             	alert("tODO OK" + xhr.responseText);
                 console.log(xhr.responseText); // handle response.
-                window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=";
+                window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=documentos/transferencia.pdf";
             }
         };
         fd.append('uploaded_file', file);
