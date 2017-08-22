@@ -1,5 +1,5 @@
 if [ ! -d ${OPENSHIFT_DATA_DIR}documentos ]; then
     mkdir ${OPENSHIFT_DATA_DIR}documentos
 fi
-ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}DocumentosServlet/
+ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}documentos
 chmod -R 0777 ${OPENSHIFT_DATA_DIR}documentos
