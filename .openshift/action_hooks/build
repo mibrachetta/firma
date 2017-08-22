@@ -3,4 +3,3 @@ if [ ! -d ${OPENSHIFT_DATA_DIR}documentos ]; then
 fi
 ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_REPO_DIR}WebContent
 chmod -R 0777 ${OPENSHIFT_DATA_DIR}documentos
-chmod -R 0777 ${OPENSHIFT_REPO_DIR}WebContent/documentos
