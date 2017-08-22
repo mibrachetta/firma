@@ -17,14 +17,12 @@
         <servlet-name>PostSignServlet</servlet-name>
         <url-pattern>/PostSignServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>documentos</servlet-name>
         <servlet-class>isis.firma.documentos</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>documentos</servlet-name>
-        <url-pattern>/pdfjs/web/documentos/*</url-pattern>
+        <url-pattern>/pdfjs/web/documentos</url-pattern>
     </servlet-mapping>
-    
 </web-app>
