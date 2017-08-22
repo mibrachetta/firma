@@ -2,27 +2,19 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>isis-firma</display-name>
   <servlet>
-        <servlet-name>PreSignServlet</servlet-name>
-        <servlet-class>isis.firma.PreSignServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PreSignServlet</servlet-name>
-        <url-pattern>/PreSignServlet</url-pattern>
-    </servlet-mapping>
-	<servlet>
-        <servlet-name>PostSignServlet</servlet-name>
-        <servlet-class>isis.firma.PostSignServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PostSignServlet</servlet-name>
-        <url-pattern>/PostSignServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>documentos</servlet-name>
-        <servlet-class>isis.firma.documentos</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>documentos</servlet-name>
-        <url-pattern>/pdfjs/web/documentos</url-pattern>
-    </servlet-mapping>
+    <servlet-name>PreSignServlet</servlet-name>
+    <servlet-class>isis.firma.PreSignServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreSignServlet</servlet-name>
+    <url-pattern>/PreSignServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PostSignServlet</servlet-name>
+    <servlet-class>isis.firma.PostSignServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostSignServlet</servlet-name>
+    <url-pattern>/PostSignServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
