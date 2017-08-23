@@ -27,9 +27,10 @@ public class UploadFileServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 String fileName="";
          for (Part part : request.getParts()) { 
               InputStream is = request.getPart(part.getName()).getInputStream();
-              String fileName = getFileName(part);  
+              fileName = getFileName(part);  
               FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_HOMEDIR") +"app-root/runtime/dependencies/jbossas/deployments/documentos.war/" + fileName);
 
               byte[] bytes = new byte[BUFFER_LENGTH];  
@@ -42,7 +43,7 @@ public class UploadFileServlet extends HttpServlet {
               os.close();  
          }
          
-         response.getWriter().write("HOLA MARIANA");
+         response.getWriter().write(fileName);
          System.out.println(System.getenv("OPENSHIFT_REPO_DIR"));
          System.out.println(System.getenv("OPENSHIFT_HOMEDIR"));
 	}
