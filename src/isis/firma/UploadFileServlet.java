@@ -31,7 +31,6 @@ public class UploadFileServlet extends HttpServlet {
               InputStream is = request.getPart(part.getName()).getInputStream();
               String fileName = getFileName(part);  
               FileOutputStream os = new FileOutputStream(System.getenv("OPENSHIFT_DATA_DIR") +"documentos/" + fileName);
-              System.out.println(os.getFD().toString());
 
               byte[] bytes = new byte[BUFFER_LENGTH];  
               int read = 0;  
@@ -45,6 +44,7 @@ public class UploadFileServlet extends HttpServlet {
          
          response.getWriter().write("HOLA MARIANA");
          System.out.println(System.getenv("OPENSHIFT_REPO_DIR"));
+         System.out.println(System.getenv("OPENSHIFT_HOMEDIR"));
 	}
 	
 	
