@@ -25,9 +25,8 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // Every thing ok, file uploaded
-            	alert("tODO OK" + xhr.responseText);
                 console.log(xhr.responseText); // handle response.
-                window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=http://firma-isisconsultores.rhcloud.com/documentos/transferencia.pdf";
+                window.location.href = "http://firma-isisconsultores.rhcloud.com/pdfjs/web/viewer.html?file=http://firma-isisconsultores.rhcloud.com/documentos/"+xhr.responseText;
             }
         };
         fd.append('uploaded_file', file);
