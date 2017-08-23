@@ -1,5 +1,0 @@
-if [ ! -d ${OPENSHIFT_DATA_DIR}documentos ]; then
-    mkdir ${OPENSHIFT_DATA_DIR}documentos
-fi
-ln -sf ${OPENSHIFT_DATA_DIR}documentos ${OPENSHIFT_HOMEDIR}app-root/runtime/dependencies/jbossas/deployments/documentos.war/documentos
-chmod -R 0777 ${OPENSHIFT_DATA_DIR}documentos
