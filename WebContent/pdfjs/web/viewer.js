@@ -6805,8 +6805,7 @@ var pdfjsWebLibs;
     PDFViewerApplication.pdfDocumentProperties.open();
    }
    function webViewerFirmarDigitalmente(){
-	   alert(document.appletFirma.thisIsAMethodCall());
-	   //"MARIANA LO HIZO " + PDFViewerApplication.url + "\n" + PDFViewerApplication.baseUrl + "\n" + PDFViewerApplication.pdfDocument
+	   alert(document.appletFirma.thisIsAMethodCall("MARIANA LO HIZO " + PDFViewerApplication.url + "\n" + PDFViewerApplication.baseUrl + "\n" + PDFViewerApplication.pdfDocument));
    }
    function webViewerFind(e) {
     PDFViewerApplication.findController.executeCommand('find' + e.type, {
